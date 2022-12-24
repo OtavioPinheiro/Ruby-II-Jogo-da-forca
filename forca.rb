@@ -45,7 +45,7 @@ def pede_chute_valido(chutes,erros, mascara)
   end
 end
 def joga(nome)
-  palavra_secreta = escolhe_palavra_secreta_pouco_consumo_memoria
+  palavra_secreta = escolhe_palavra_secreta
   erros = 0
   chutes = []
   pontos_ate_agora = 0
