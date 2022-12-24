@@ -1,10 +1,5 @@
 require_relative 'ui'
-
-
-def salva_rank(nome, pontos_totais)
-  conteudo = "#{nome}\n#{pontos_totais}"
-  File.write("rank.txt", conteudo)
-end
+require_relative 'rank'
 
 def escolhe_palavra_secreta
   avisa_escolhendo_palavra
@@ -39,6 +34,7 @@ def palavra_mascarada(chutes, palavra_secreta)
   }
   mascara
 end
+
 def pede_chute_valido(chutes,erros, mascara)
   cabecalho_de_tentativas(chutes, erros, mascara)
   loop do
@@ -50,6 +46,7 @@ def pede_chute_valido(chutes,erros, mascara)
     end
   end
 end
+
 def joga(nome)
   palavra_secreta = escolhe_palavra_secreta
   erros = 0
@@ -58,22 +55,30 @@ def joga(nome)
 
   while erros < 5
     mascara = palavra_mascarada(chutes, palavra_secreta)
+
+    acertou_palavra = mascara.count("_") == 0
+    if acertou_palavra
+      avisa_acertou_palavra(palavra_secreta)
+      pontos_ate_agora += 90
+      break
+    end
+
     chute = pede_chute_valido(chutes, erros, mascara)
     chutes << chute
 
     chutou_uma_letra = chute.size == 1
     if chutou_uma_letra
-      total_encontrado = palavra_secreta.count(chute)
-      if total_encontrado == 0
+      letra_encontrada = palavra_secreta.count(chute)
+      if letra_encontrada == 0
         avisa_letra_nao_encontrada
         erros += 1
       else
-        avisa_letra_encontrada(total_encontrado)
+        avisa_letra_encontrada(letra_encontrada)
       end
     else
       acertou = chute == palavra_secreta
       if acertou
-        avisa_acertou_palavra
+        avisa_acertou_palavra(palavra_secreta)
         pontos_ate_agora += 100
         break
       else
@@ -83,6 +88,11 @@ def joga(nome)
       end
     end
   end
+
+  if erros >= 5
+    avisa_perdeu(palavra_secreta)
+  end
+
   avisa_pontos(pontos_ate_agora)
   pontos_ate_agora
 end
@@ -91,10 +101,14 @@ def jogo_da_forca
   nome = da_boas_vindas
   pontos_totais = 0
 
+  avisa_campeao_atual(le_rank)
+
   loop do
     pontos_totais += joga(nome)
     avisa_pontos_totais(pontos_totais)
-    salva_rank(nome, pontos_totais)
+    if le_rank[1].to_i < pontos_totais
+      salva_rank(nome, pontos_totais)
+    end
     if nao_quer_jogar?
       break
     end
