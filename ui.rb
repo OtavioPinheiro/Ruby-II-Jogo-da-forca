@@ -18,8 +18,9 @@ def avisa_letra_encontrada(total_encontrado)
   puts "Letra encontrada #{total_encontrado} vezes."
 end
 
-def avisa_acertou_palavra
+def avisa_acertou_palavra(palavra_secreta)
   puts "\nParabéns, você ganhou!"
+  puts "A palavra secreta era: #{palavra_secreta}"
   puts
 
   puts "       ___________      "
@@ -82,7 +83,6 @@ def desenha_forca(erros)
   puts " |              "
   puts "_|___           "
   puts
-
 end
 
 def avisa_escolhendo_palavra

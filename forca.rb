@@ -34,6 +34,7 @@ def palavra_mascarada(chutes, palavra_secreta)
   }
   mascara
 end
+
 def pede_chute_valido(chutes,erros, mascara)
   cabecalho_de_tentativas(chutes, erros, mascara)
   loop do
@@ -45,6 +46,7 @@ def pede_chute_valido(chutes,erros, mascara)
     end
   end
 end
+
 def joga(nome)
   palavra_secreta = escolhe_palavra_secreta
   erros = 0
@@ -53,22 +55,30 @@ def joga(nome)
 
   while erros < 5
     mascara = palavra_mascarada(chutes, palavra_secreta)
+
+    acertou_palavra = mascara.count("_") == 0
+    if acertou_palavra
+      avisa_acertou_palavra(palavra_secreta)
+      pontos_ate_agora += 90
+      break
+    end
+
     chute = pede_chute_valido(chutes, erros, mascara)
     chutes << chute
 
     chutou_uma_letra = chute.size == 1
     if chutou_uma_letra
-      total_encontrado = palavra_secreta.count(chute)
-      if total_encontrado == 0
+      letra_encontrada = palavra_secreta.count(chute)
+      if letra_encontrada == 0
         avisa_letra_nao_encontrada
         erros += 1
       else
-        avisa_letra_encontrada(total_encontrado)
+        avisa_letra_encontrada(letra_encontrada)
       end
     else
       acertou = chute == palavra_secreta
       if acertou
-        avisa_acertou_palavra
+        avisa_acertou_palavra(palavra_secreta)
         pontos_ate_agora += 100
         break
       else
