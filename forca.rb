@@ -1,15 +1,5 @@
 require_relative 'ui'
-
-
-def salva_rank(nome, pontos_totais)
-  conteudo = "#{nome}\n#{pontos_totais}"
-  File.write("rank.txt", conteudo)
-end
-
-def le_rank
-  conteudo = File.read("rank.txt")
-  conteudo.split("\n")
-end
+require_relative 'rank'
 
 def escolhe_palavra_secreta
   avisa_escolhendo_palavra
