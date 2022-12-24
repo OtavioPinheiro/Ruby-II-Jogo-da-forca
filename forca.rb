@@ -88,6 +88,11 @@ def joga(nome)
       end
     end
   end
+
+  if erros >= 5
+    avisa_perdeu(palavra_secreta)
+  end
+
   avisa_pontos(pontos_ate_agora)
   pontos_ate_agora
 end

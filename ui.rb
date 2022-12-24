@@ -36,6 +36,12 @@ def avisa_acertou_palavra(palavra_secreta)
   puts
 end
 
+def avisa_perdeu(palavra_secreta)
+  puts "\nFIM DE JOGO!!!"
+  puts "Que pena... você perdeu!\n"
+  puts "A palavra secreta era: #{palavra_secreta}\n\n"
+end
+
 def avisa_errou_palavra
   puts "Que pena... errou"
 end
